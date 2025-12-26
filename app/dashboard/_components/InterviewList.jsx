@@ -1,49 +1,37 @@
-"use client"
-import { db } from '@/utils/db';
-import { MockInterview } from '@/utils/schema';
-import { useUser } from '@clerk/nextjs'
-import { desc, eq } from 'drizzle-orm';
-import React, { useEffect, useState } from 'react'
-import InterviewItemCard from './InterviewItemCard';
+"use client";
 
-function InterviewList() {
+import { useEffect, useState } from "react";
 
-    const {user}=useUser();
-    const [interviewList,setInterviewList]=useState([]);
+export default function InterviewList() {
+  const [interviews, setInterviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
-        user&&GetInterviewList();
-    },[user])
+  useEffect(() => {
+    fetch("/api/interviews")
+      .then((res) => res.json())
+      .then((data) => {
+        setInterviews(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
-    const GetInterviewList=async()=>{
-        const result=await db.select()
-        .from(MockInterview)
-        .where(eq(MockInterview.createdBy,user?.primaryEmailAddress?.emailAddress))
-        .orderBy(desc(MockInterview.id));
+  if (loading) return <p>Loading interviews...</p>;
 
-        console.log(result);
-        setInterviewList(result);
-    }
+  if (!interviews.length) {
+    return <p className="text-gray-500">No interviews yet</p>;
+  }
 
   return (
-    <div>
-        <h2 className='font-medium text-xl'>Previous Mock Interview</h2>
-
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3'>
-            {interviewList?.length>0?interviewList.map((interview,index)=>(
-                <InterviewItemCard 
-                interview={interview}
-                key={index} />
-            ))
-            :
-            [1,2,3,4].map((item,index)=>(
-                <div className='h-[100px] w-full bg-gray-200 animate-pulse rounded-lg '>
-                </div>
-            ))
-        }
+    <div className="mt-5">
+      {interviews.map((item) => (
+        <div key={item.id} className="border p-3 rounded mb-2">
+          <h3 className="font-semibold">{item.title}</h3>
         </div>
+      ))}
     </div>
-  )
+  );
 }
-
-export default InterviewList

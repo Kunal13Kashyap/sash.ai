@@ -24,7 +24,7 @@ export default[
     {
         id:1,
         name:'Monthly',
-        cost:7.99,
+        cost:100,
         paymentLink:'https://buy.stripe.com/test_28o9EjbkvgfQ8VOeUV',
         offering:[
             {

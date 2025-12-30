@@ -1,84 +1,201 @@
-'use client'
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import Header from "./dashboard/_components/Header";
+"use client";
 
-const Home = () => {
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+
+export default function Home() {
   const router = useRouter();
 
-  const redirectToJobPortal = () => {
-    const jobPortalLink = 'https://www.naukri.com/jobs-in-vadodara-baroda'; 
-    window.open(jobPortalLink, '_blank');
-  };
-
   return (
-    <>
-      <Header />
-      <div className="min-h-screen w-full flex flex-col justify-between items-center bg-gray-50 text-gray-900">
-        <div className="w-full py-20 bg-white-200 text-center shadow-md">
-          <h1 className="font-extrabold text-4xl md:text-5xl text-gray-800 mb-4">
-            Your Interview Practice Platform
+    <div className="hero-bg noise min-h-screen text-white">
+
+      {/* NAVBAR */}
+      <nav className="relative z-10 flex justify-between items-center px-10 py-6">
+        <div className="text-xl font-semibold flex items-center gap-2">
+          <div className="w-9 h-9 rounded-lg bg-emerald-400/20 flex items-center justify-center">
+            AI
+          </div>
+        </div>
+
+        <div className="hidden md:flex gap-6 text-sm ml-24">
+          {["Features", "Testimonials", "Pricing"].map((item) => (
+            <button
+              key={item}
+              onClick={() => {
+                if (item === "Pricing") router.push("/pricing");
+              }}
+              className="
+                px-4 py-2 rounded-full
+                text-gray-300
+                transition-all duration-300
+                hover:bg-white/10
+                hover:text-emerald-300
+                focus:outline-none
+              "
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+
+
+        <div className="flex gap-4">
+          <button onClick={() => router.push("/sign-in")} className="text-sm">
+            Sign In
+          </button>
+          <button
+            onClick={() => router.push("/sign-up")}
+            className="bg-emerald-400 text-black px-5 py-2 rounded-full text-sm font-medium"
+          >
+            Get Started
+          </button>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section className="relative z-10 max-w-7xl mx-auto px-10 pt-20 grid md:grid-cols-2 gap-16 items-center">
+
+        {/* LEFT */}
+        <motion.div
+          className="md:pl-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-5xl font-bold leading-tight">
+            AI Interview <br /> Preparation
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-8">
-            Practice makes perfect. Prepare for your interviews with our comprehensive tools and resources.
+
+          <p className="mt-6 text-gray-300 max-w-lg">
+            Practice for your next job interview with AI.
+            Improve your skills, receive smart feedback,
+            and boost your confidence.
           </p>
-          <div className="flex justify-center gap-4">
-            <Button
-              className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-700"
-              onClick={() => router.push('/dashboard')}
-            >
-              Get Started <ArrowRightIcon />
-            </Button>
-            <Button
-              className="flex items-center gap-2 bg-green-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-green-600"
-              onClick={redirectToJobPortal}
-            >
-              Find Jobs
-            </Button>
-          </div>
-        </div>
 
-        <div className="w-full py-16 bg-gray-100">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div>
-              <h2 className="font-bold text-xl mb-4">Comprehensive Practice</h2>
-              <p className="text-gray-700">Access a variety of interview questions and practice scenarios tailored to your needs.</p>
-            </div>
-            <div>
-              <h2 className="font-bold text-xl mb-4">Expert Feedback</h2>
-              <p className="text-gray-700">Receive feedback from industry professionals to improve your performance.</p>
-            </div>
-            <div>
-              <h2 className="font-bold text-xl mb-4">Job Matching</h2>
-              <p className="text-gray-700">Find job opportunities that match your skills and experience directly from our platform.</p>
-            </div>
-          </div>
-        </div>
+          <button
+            onClick={() => router.push("/sign-up")}
+            className="mt-8 bg-emerald-400 text-black px-7 py-3 rounded-full font-medium"
+          >
+            Get Started
+          </button>
 
-        <div className="w-full bg-white-100 py-16">
-          <div className="max-w-6xl mx-auto text-center">
-            <h2 className="font-bold text-2xl mb-8">What Our Users Say</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              <div>
-                <p className="text-gray-700">"This platform helped me land my dream job!" - Jane Doe</p>
+          <p className="mt-3 text-xs text-gray-400">
+            Start for free · Cancel anytime
+          </p>
+        </motion.div>
+
+        {/* RIGHT – CARD STACK */}
+        <div className="relative h-[420px] flex justify-center items-center">
+
+          {/* BACK CARDS */}
+          {[2, 1].map((i) => (
+            <motion.div
+              key={i}
+              className="absolute w-[280px] h-[360px] glass rounded-3xl"
+              style={{ zIndex: i }}
+              animate={{
+                x: i * 18,
+                y: i * 18,
+                scale: 1 - i * 0.04,
+              }}
+            />
+          ))}
+
+          {/* FRONT CARD */}
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            whileDrag={{ rotate: 6 }}
+            className="relative z-20 w-[300px] h-[380px] bg-white text-black rounded-3xl p-5 shadow-2xl cursor-grab"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gray-200" />
+              <p className="font-semibold text-sm">
+                Project Management Interview
+              </p>
+            </div>
+
+            <p className="mt-5 text-sm font-medium">
+              Describe a time when you led a complex project.
+            </p>
+
+            <div className="mt-6">
+              <p className="text-xs text-gray-500 mb-2">Quality Feedback</p>
+              <div className="flex justify-between text-xs mb-1">
+                <span>Communication</span>
+                <span className="font-semibold">8.6</span>
               </div>
-              <div>
-                <p className="text-gray-700">"The practice questions were exactly what I needed." - John Smith</p>
-              </div>
-              <div>
-                <p className="text-gray-700">"The feedback I received was invaluable." - Emily Johnson</p>
+              <div className="h-2 bg-gray-200 rounded">
+                <div className="h-2 bg-emerald-400 w-[85%] rounded" />
               </div>
             </div>
-          </div>
-        </div>
 
-        <footer className="w-full bg-gray-200 py-4 text-center text-gray-600">
-          <p>&copy; 2024 Your Company. All rights reserved.</p>
-        </footer>
+            <button className="mt-6 w-full bg-emerald-400 py-2 rounded-full text-sm font-medium">
+              Swipe for Next →
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FEATURES – MATCH IMAGE */}
+<section className="relative z-10 px-10 mt-32 max-w-7xl mx-auto">
+  <h2 className="text-center text-gray-300 mb-14 text-lg">
+    Meet your Wise AI ITIs
+  </h2>
+
+<div className="grid md:grid-cols-3 gap-10 items-center">
+    
+    {/* CARD 1 */}
+    <div className="relative green-glass feature-hover rounded-3xl px-7 py-9 text-center md:scale-95 transition-transform duration-300 hover:-translate-y-2">
+      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
+        💬
       </div>
-    </>
-  );
-};
+      <h3 className="text-lg font-semibold mb-3">
+        Realistic Practice
+      </h3>
+      <p className="text-sm text-gray-300 leading-relaxed">
+        Get asked real interview questions and answer just like you would in a real interview.
+      </p>
+    </div>
 
-export default Home;
+    {/* CARD 2 */}
+    <div className="relative green-glass feature-hover rounded-3xl px-9 py-12 text-center md:scale-105 md:-translate-y-3 transition-transform duration-300 hover:-translate-y-4">
+      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
+        ⚙️
+      </div>
+      <h3 className="text-lg font-semibold mb-3">
+        AI Feedback
+      </h3>
+      <p className="text-sm text-gray-300 leading-relaxed">
+        Receive detailed AI-driven feedback on your responses and learn exactly how to improve.
+      </p>
+    </div>
+
+    {/* CARD 3 */}
+    <div className="relative green-glass feature-hover rounded-3xl px-7 py-9 text-center md:scale-95 transition-transform duration-300 hover:-translate-y-2">
+      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
+        👤
+      </div>
+      <h3 className="text-lg font-semibold mb-3">
+        Personalized Learning
+      </h3>
+      <p className="text-sm text-gray-300 leading-relaxed">
+        Train for specific roles and receive personalized feedback aligned with your career goals.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+      {/* TRUSTED */}
+      <footer className="relative z-10 mt-24 pb-16 text-center text-gray-400 text-sm">
+        Trusted by professionals at top companies
+        <div className="flex justify-center gap-8 mt-6 opacity-60 text-lg">
+          Google · Meta · Amazon · Spotify · Microsoft
+        </div>
+      </footer>
+    </div>
+  );
+}

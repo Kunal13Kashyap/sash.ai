@@ -53,7 +53,7 @@ function ContactUsPage() {
 
   return (
     <div className="container mt-12 mx-auto p-4 pt-6 md:p-6 lg:p-12 bg-gray-100">
-      <h1 className="text-3xl font-semibold text-center mb-8 text-gray-800">Get in Touch</h1>
+      <h1 className="text-3xl font-semibold text-center mb-8 text-gray-800">Contact Us</h1>
       <p className="text-lg text-center mb-12">
         Have a question or want to learn more about prepAI? We'd love to hear from you!
       </p>

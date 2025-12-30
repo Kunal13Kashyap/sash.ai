@@ -1,4 +1,13 @@
-import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, timestamp, uuid} from "drizzle-orm/pg-core";
+
+export const resumes = pgTable("resumes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: text("user_id"), // Clerk userId later
+  fileName: text("file_name").notNull(),
+  filePath: text("file_path").notNull(),
+  textContent: text("text_content"), // parsed resume text
+  createdAt: timestamp("created_at").defaultNow(),
+});
 
 export const MockInterview= pgTable('mockInterview',{
     id:serial('id').primaryKey(),

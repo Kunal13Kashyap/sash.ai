@@ -7,195 +7,266 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="hero-bg noise min-h-screen text-white">
+    <main className="relative min-h-screen overflow-hidden text-gray-900">
 
-      {/* NAVBAR */}
-      <nav className="relative z-10 flex justify-between items-center px-10 py-6">
-        <div className="text-xl font-semibold flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-emerald-400/20 flex items-center justify-center">
-            AI
+      {/* ================= DYNAMIC BACKGROUND ================= */}
+      <div className="absolute inset-0 -z-10">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-blue-100" />
+
+        {/* Animated blobs */}
+        <motion.div
+          className="absolute -top-32 -left-32 w-[520px] h-[520px] bg-blue-400/20 rounded-full blur-3xl"
+          animate={{ x: [0, 40, 0], y: [0, 30, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[-180px] right-[-160px] w-[620px] h-[620px] bg-sky-400/20 rounded-full blur-3xl"
+          animate={{ x: [0, -40, 0], y: [0, -30, 0] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      {/* ================= NAVBAR ================= */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-10 py-4 flex items-center justify-between">
+
+          {/* LOGO */}
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+              CS
+            </div>
+            <span className="font-semibold">
+              Sash<span className="text-blue-600">.AI</span>
+            </span>
           </div>
-        </div>
 
-        <div className="hidden md:flex gap-6 text-sm ml-24">
-          {["Features", "Testimonials", "Pricing"].map((item) => (
+          {/* NAV LINKS */}
+          <div className="hidden md:flex gap-6 text-sm text-gray-600">
+            <a href="#features" className="hover:text-blue-600">Features</a>
+            <a href="#about" className="hover:text-blue-600">About</a>
             <button
-              key={item}
-              onClick={() => {
-                if (item === "Pricing") router.push("/pricing");
-              }}
-              className="
-                px-4 py-2 rounded-full
-                text-gray-300
-                transition-all duration-300
-                hover:bg-white/10
-                hover:text-emerald-300
-                focus:outline-none
-              "
+              onClick={() => router.push("/pricing")}
+              className="hover:text-blue-600"
             >
-              {item}
+              Pricing
             </button>
-          ))}
-        </div>
+          </div>
 
-
-
-        <div className="flex gap-4">
-          <button onClick={() => router.push("/sign-in")} className="text-sm">
-            Sign In
-          </button>
-          <button
-            onClick={() => router.push("/sign-up")}
-            className="bg-emerald-400 text-black px-5 py-2 rounded-full text-sm font-medium"
-          >
-            Get Started
-          </button>
+          {/* ACTIONS */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => router.push("/sign-in")}
+              className="text-sm text-gray-600 hover:text-blue-600"
+            >
+              Sign in
+            </button>
+            <button
+              onClick={() => router.push("/sign-up")}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl text-sm font-semibold shadow-md"
+            >
+              Get Started
+            </button>
+          </div>
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="relative z-10 max-w-7xl mx-auto px-10 pt-20 grid md:grid-cols-2 gap-16 items-center">
+      {/* ================= HERO ================= */}
+      <section className="pt-32 px-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
         {/* LEFT */}
         <motion.div
-          className="md:pl-10"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
-          <h1 className="text-5xl font-bold leading-tight">
-            AI Interview <br /> Preparation
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+            AI Interview Preparation,
+            <br />
+            <span className="text-blue-600">Reimagined</span>
           </h1>
 
-          <p className="mt-6 text-gray-300 max-w-lg">
-            Practice for your next job interview with AI.
-            Improve your skills, receive smart feedback,
-            and boost your confidence.
+          <p className="text-gray-600 text-lg max-w-xl mb-8">
+            Practice real interview questions with AI, get instant feedback,
+            and track every job application in one clean dashboard.
           </p>
 
           <button
             onClick={() => router.push("/sign-up")}
-            className="mt-8 bg-emerald-400 text-black px-7 py-3 rounded-full font-medium"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg"
           >
-            Get Started
+            Get Started Free
           </button>
 
-          <p className="mt-3 text-xs text-gray-400">
-            Start for free · Cancel anytime
+          <p className="text-sm text-gray-500 mt-3">
+            Start free · No credit card · Cancel anytime
           </p>
         </motion.div>
 
-        {/* RIGHT – CARD STACK */}
-        <div className="relative h-[420px] flex justify-center items-center">
+        {/* RIGHT CARD */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -14 }}
+          transition={{ type: "spring", stiffness: 120, damping: 18 }}
+          className="relative soft-card p-6 max-w-md"
+        >
+          <p className="text-sm font-semibold text-gray-500 mb-2">
+            Project Management Interview
+          </p>
 
-          {/* BACK CARDS */}
-          {[2, 1].map((i) => (
-            <motion.div
-              key={i}
-              className="absolute w-[280px] h-[360px] glass rounded-3xl"
-              style={{ zIndex: i }}
-              animate={{
-                x: i * 18,
-                y: i * 18,
-                scale: 1 - i * 0.04,
-              }}
-            />
-          ))}
+          <p className="text-lg font-medium mb-6">
+            Tell me about a time you led a cross-functional team under a tight deadline.
+          </p>
 
-          {/* FRONT CARD */}
-          <motion.div
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            whileDrag={{ rotate: 6 }}
-            className="relative z-20 w-[300px] h-[380px] bg-white text-black rounded-3xl p-5 shadow-2xl cursor-grab"
-          >
+          <div className="mb-6">
+            <p className="text-sm text-gray-500 mb-1">AI Feedback Preview</p>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gray-200" />
-              <p className="font-semibold text-sm">
-                Project Management Interview
-              </p>
-            </div>
-
-            <p className="mt-5 text-sm font-medium">
-              Describe a time when you led a complex project.
-            </p>
-
-            <div className="mt-6">
-              <p className="text-xs text-gray-500 mb-2">Quality Feedback</p>
-              <div className="flex justify-between text-xs mb-1">
-                <span>Communication</span>
-                <span className="font-semibold">8.6</span>
+              <div className="h-2 flex-1 bg-gray-200 rounded-full">
+                <div className="h-2 bg-blue-600 rounded-full w-[86%]" />
               </div>
-              <div className="h-2 bg-gray-200 rounded">
-                <div className="h-2 bg-emerald-400 w-[85%] rounded" />
-              </div>
+              <span className="text-sm font-semibold">8.6</span>
             </div>
+          </div>
 
-            <button className="mt-6 w-full bg-emerald-400 py-2 rounded-full text-sm font-medium">
-              Swipe for Next →
-            </button>
-          </motion.div>
+          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
+            Swipe for Next →
+          </button>
+
+          <p className="text-xs text-gray-500 mt-3 text-center">
+            Private & secure · No recordings stored
+          </p>
+        </motion.div>
+      </section>
+
+      {/* ================= FEATURES ================= */}
+      <section id="features" className="mt-32 px-10 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-4">
+          Prepare for Your Dream Job
+        </h2>
+        <p className="text-gray-600 text-center mb-16">
+          Everything you need to practice, apply, and track — in one place.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            ["AI Resume Builder", "Parse and edit your resume intelligently."],
+            ["Job Swiping", "Swipe right to apply, left to skip."],
+            ["Application Tracking", "Track applied, rejected, shortlisted roles."],
+          ].map(([title, desc]) => (
+            <motion.div
+              key={title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -12 }}
+              transition={{ type: "spring", stiffness: 160 }}
+              className="soft-card p-6 bg-gradient-to-br from-white via-blue-50 to-white"
+            >
+              <h3 className="text-lg font-semibold mb-2">{title}</h3>
+              <p className="text-sm text-gray-600">{desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* FEATURES – MATCH IMAGE */}
-<section className="relative z-10 px-10 mt-32 max-w-7xl mx-auto">
-  <h2 className="text-center text-gray-300 mb-14 text-lg">
-    Meet your Wise AI ITIs
-  </h2>
+{/* ================= ABOUT ================= */}
+<section
+  id="about"
+  className="relative z-10 mt-32 px-10 max-w-6xl mx-auto text-center"
+>
+  {/* Heading */}
+  <motion.h2
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="text-3xl md:text-4xl font-bold mb-6 text-gray-900"
+  >
+    About Us
+  </motion.h2>
 
-<div className="grid md:grid-cols-3 gap-10 items-center">
-    
-    {/* CARD 1 */}
-    <div className="relative green-glass feature-hover rounded-3xl px-7 py-9 text-center md:scale-95 transition-transform duration-300 hover:-translate-y-2">
-      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
-        💬
-      </div>
-      <h3 className="text-lg font-semibold mb-3">
-        Realistic Practice
-      </h3>
-      <p className="text-sm text-gray-300 leading-relaxed">
-        Get asked real interview questions and answer just like you would in a real interview.
-      </p>
-    </div>
+  <motion.p
+    initial={{ opacity: 0 }}
+    whileInView={{ opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: 0.2 }}
+    className="text-gray-600 mb-16 max-w-3xl mx-auto"
+  >
+    Two people building something useful, practical, and better than what already exists.
+  </motion.p>
 
-    {/* CARD 2 */}
-    <div className="relative green-glass feature-hover rounded-3xl px-9 py-12 text-center md:scale-105 md:-translate-y-3 transition-transform duration-300 hover:-translate-y-4">
-      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
-        ⚙️
-      </div>
-      <h3 className="text-lg font-semibold mb-3">
-        AI Feedback
-      </h3>
-      <p className="text-sm text-gray-300 leading-relaxed">
-        Receive detailed AI-driven feedback on your responses and learn exactly how to improve.
-      </p>
-    </div>
+  <div className="grid md:grid-cols-2 gap-12">
+    {[
+      {
+        name: "Saaransh Jain",
+        img: "/about/saaransh.jpeg",
+        desc: "Builds things. Breaks them. Fixes them again.",
+      },
+      {
+        name: "Kunal Kashyap",
+        img: "/about/kunal.jpeg",
+        desc: "Thinks deeply, questions assumptions, and keeps things grounded.",
+      },
+    ].map(({ name, img, desc }, i) => (
+      <motion.div
+        key={name}
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: i * 0.15, type: "spring", stiffness: 120 }}
+        whileHover={{ y: -12, scale: 1.04 }}
+        className="relative rounded-3xl p-8 overflow-hidden border border-blue-100 shadow-xl bg-white"
+      >
+        {/* ===== Gradient Background (NO opacity) ===== */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-blue-100" />
 
-    {/* CARD 3 */}
-    <div className="relative green-glass feature-hover rounded-3xl px-7 py-9 text-center md:scale-95 transition-transform duration-300 hover:-translate-y-2">
-      <div className="feature-icon mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-400/20 text-emerald-300">
-        👤
-      </div>
-      <h3 className="text-lg font-semibold mb-3">
-        Personalized Learning
-      </h3>
-      <p className="text-sm text-gray-300 leading-relaxed">
-        Train for specific roles and receive personalized feedback aligned with your career goals.
-      </p>
-    </div>
+        {/* ===== Animated Glow ===== */}
+        <motion.div
+          className="absolute -top-24 -right-24 w-72 h-72 bg-blue-400/25 rounded-full blur-3xl"
+          animate={{ x: [0, -20, 0], y: [0, 20, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        />
 
+        {/* ===== Hover Light Sweep ===== */}
+        <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-transparent via-white/40 to-transparent pointer-events-none" />
+
+        {/* ===== CONTENT ===== */}
+        <div className="relative flex flex-col items-center text-center">
+          {/* Image wrapper — centered */}
+          <div className="relative flex items-center justify-center mb-6">
+            <div className="absolute inset-0 rounded-full bg-blue-500/30 blur-xl" />
+            <img
+              src={img}
+              alt={name}
+              className="relative w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg"
+            />
+          </div>
+
+          {/* Name — solid color */}
+          <h3 className="text-lg font-semibold text-gray-900">
+            {name}
+          </h3>
+
+          {/* Description — readable */}
+          <p className="text-sm text-gray-700 mt-2 max-w-xs">
+            {desc}
+          </p>
+        </div>
+      </motion.div>
+    ))}
   </div>
 </section>
 
 
-      {/* TRUSTED */}
-      <footer className="relative z-10 mt-24 pb-16 text-center text-gray-400 text-sm">
+
+      {/* ================= FOOTER ================= */}
+      <footer className="mt-32 pb-16 text-center text-sm text-gray-500">
         Trusted by professionals at top companies
-        <div className="flex justify-center gap-8 mt-6 opacity-60 text-lg">
+        <div className="flex justify-center gap-8 mt-6 opacity-70">
           Google · Meta · Amazon · Spotify · Microsoft
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

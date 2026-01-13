@@ -1,21 +1,26 @@
-"use client";
-
-import AddNewInterview from "./_components/AddNewInterview";
-import InterviewList from "./_components/InterviewList";
+import Sidebar from "./_components/Sidebar";
+import TopBar from "./_components/TopBar";
+import JobCardStack from "./_components/JobCardStack";
 
 export default function Dashboard() {
   return (
-    <div className="p-10">
-      <h2 className="font-bold text-2xl">Welcome to Dashboard</h2>
-      <h2 className="text-gray-500">
-        Create and start your mock interview
-      </h2>
+    <div className="flex w-full min-h-screen">
+      {/* LEFT SIDEBAR */}
+      <Sidebar />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 my-5">
-        <AddNewInterview />
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col gap-6 p-6">
+        {/* TOP BAR */}
+        <TopBar />
+
+        {/* CENTER STACK */}
+        <div className="flex-1 flex justify-center items-start">
+          <JobCardStack />
+        </div>
       </div>
 
-      <InterviewList />
+      {/* RIGHT PANEL (future preferences) */}
+      {/* <PreferencesPanel /> */}
     </div>
   );
 }

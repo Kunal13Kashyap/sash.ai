@@ -1,26 +1,73 @@
-import Sidebar from "./_components/Sidebar";
 import TopBar from "./_components/TopBar";
 import JobCardStack from "./_components/JobCardStack";
+import PreferencesPanel from "./_components/PreferencesPanel";
+import SwipeActions from "./_components/SwipeActions";
 
 export default function Dashboard() {
   return (
-    <div className="flex w-full min-h-screen">
-      {/* LEFT SIDEBAR */}
-      <Sidebar />
+    <div className="flex w-full h-screen bg-[#f5f7fb]">
+      
 
-      {/* MAIN CONTENT */}
-      <div className="flex-1 flex flex-col gap-6 p-6">
+      {/* DASHBOARD CANVAS */}
+      <div
+        className="relative flex-1"
+        style={{
+          /* 🎛 MASTER COORDINATES — EDIT ONLY THESE */
+          "--topbar-y": "24px",
+
+          "--jobcard-x": "33%",
+          "--jobcard-y": "130px",
+
+          "--actions-x": "33%",
+          "--actions-y": "540px",
+
+          "--preferences-x": "calc(100% - 360px)",
+          "--preferences-y": "130px",
+        }}
+      >
         {/* TOP BAR */}
-        <TopBar />
+        <div
+          className="absolute left-0 right-0 px-6"
+          style={{ top: "var(--topbar-y)" }}
+        >
+          <TopBar />
+        </div>
 
-        {/* CENTER STACK */}
-        <div className="flex-1 flex justify-center items-start">
+        {/* JOB CARD STACK */}
+        <div
+          className="absolute"
+          style={{
+            top: "var(--jobcard-y)",
+            left: "var(--jobcard-x)",
+            transform: "translateX(-50%)",
+          }}
+        >
           <JobCardStack />
         </div>
-      </div>
 
-      {/* RIGHT PANEL (future preferences) */}
-      {/* <PreferencesPanel /> */}
+        {/* SWIPE ACTION BUTTONS */}
+        <div
+          className="absolute"
+          style={{
+            top: "var(--actions-y)",
+            left: "var(--actions-x)",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <SwipeActions />
+        </div>
+
+        {/* PREFERENCES PANEL */}
+        <div
+          className="absolute"
+          style={{
+            top: "var(--preferences-y)",
+            left: "var(--preferences-x)",
+          }}
+        >
+          <PreferencesPanel />
+        </div>
+      </div>
     </div>
   );
 }

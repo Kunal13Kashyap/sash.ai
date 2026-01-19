@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Home,
   Flame,
@@ -14,18 +15,18 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { label: "Dashboard", icon: Home },
-  { label: "Swipe Jobs", icon: Flame },
-  { label: "Applications", icon: FileText },
-  { label: "Saved Jobs", icon: Bookmark },
-  { label: "Analytics", icon: BarChart3 },
-  { label: "Resume", icon: File },
-  { label: "Notifications", icon: Bell, badge: 5 },
+  { label: "Dashboard", icon: Home, href: "/dashboard" },
+  { label: "Resume", icon: File, href: "/dashboard/resume" },
+  { label: "Applications", icon: FileText, href: "/applications" },
+  { label: "Saved Jobs", icon: Bookmark, href: "/saved-jobs" },
+  { label: "Analytics", icon: BarChart3, href: "/analytics" },
+  { label: "Swipe Jobs", icon: Flame, href: "/dashboard" },
+  { label: "Notifications", icon: Bell, badge: 5, href: "/notifications" },
 ];
 
 export default function Sidebar() {
   const router = useRouter();
-  const active = "Dashboard"; // later make dynamic
+  const pathname = usePathname();
 
   return (
     <aside
@@ -39,7 +40,7 @@ export default function Sidebar() {
     >
       {/* ================= LOGO ================= */}
       <div
-        onClick={() => router.push("/")}
+        onClick={() => router.push("/dashboard")}
         className="
           flex items-center gap-3 px-6 py-5 cursor-pointer
           hover:bg-blue-50 transition-colors
@@ -62,15 +63,16 @@ export default function Sidebar() {
 
       {/* ================= NAV ================= */}
       <nav className="flex-1 px-3 pt-2 space-y-1">
-        {navItems.map(({ label, icon: Icon, badge }) => {
-          const isActive = label === active;
+        {navItems.map(({ label, icon: Icon, badge, href }) => {
+          const isActive = pathname === href;
 
           return (
-            <div
+            <Link
               key={label}
+              href={href}
               className={`
                 relative group flex items-center gap-3
-                px-4 py-2 rounded-xl cursor-pointer
+                px-4 py-2 rounded-xl
                 transition-all duration-300
                 ${
                   isActive
@@ -99,7 +101,7 @@ export default function Sidebar() {
                   {badge}
                 </span>
               )}
-            </div>
+            </Link>
           );
         })}
       </nav>

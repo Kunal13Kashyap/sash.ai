@@ -9,7 +9,7 @@ export default function SwipeActions({ onLike, onSkip }) {
       <button
         onClick={onSkip}
         className="
-          w-14 h-14
+          w-11 h-11
           rounded-full
           bg-red-100
           flex items-center justify-center

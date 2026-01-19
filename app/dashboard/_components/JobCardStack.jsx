@@ -43,43 +43,61 @@ export default function JobCardStack() {
 
   const handleSwipe = (direction) => {
     setJobs((prev) => prev.slice(1));
-    // later: API call for apply/skip
+    // later: API call for apply / skip
   };
 
   return (
-    <div className="flex flex-col items-center">
-      {/* CARD STACK */}
-      <div className="relative h-[460px] w-[360px]">
-        <AnimatePresence>
-          {jobs.slice(0, 2).map((job, index) => (
+  <div className="flex flex-col items-center">
+    {/* CARD STACK */}
+    <div className="relative h-[460px] w-[360px]">
+      <AnimatePresence>
+        {jobs.length === 0 && (
+          <motion.div
+            key="empty"
+            className="absolute inset-0 flex items-center justify-center
+                       text-sm text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            No more jobs 🎉
+          </motion.div>
+        )}
+
+        {jobs.slice(0, 2).map((job, index) => {
+          const isTop = index === 0;
+
+          return (
             <motion.div
               key={job.id}
-              drag={index === 0 ? "x" : false}
+              className="absolute"
+              drag={isTop ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(e, info) => {
                 if (info.offset.x > 120) handleSwipe("right");
                 if (info.offset.x < -120) handleSwipe("left");
               }}
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{
+                scale: isTop ? 1 : 0.94,
+                y: index * 12,
+                opacity: 1,
+              }}
+              exit={{
+                x: isTop ? 300 : 0,
+                opacity: 0,
+                rotate: isTop ? 12 : 0,
+              }}
+              transition={{ type: "spring", stiffness: 140 }}
               style={{
                 zIndex: jobs.length - index,
               }}
-              animate={{
-                scale: index === 0 ? 1 : 0.95,
-                y: index * 10,
-              }}
-              transition={{ type: "spring", stiffness: 120 }}
             >
               <JobCard job={job} />
             </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* ACTION BUTTONS */}
-      <SwipeActions
-        onLike={() => handleSwipe("right")}
-        onSkip={() => handleSwipe("left")}
-      />
+          );
+        })}
+      </AnimatePresence>
     </div>
-  );
+  </div>
+);
 }

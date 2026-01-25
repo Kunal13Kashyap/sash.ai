@@ -9,10 +9,6 @@ import ResumePreview from "./_components/ResumePreview";
 import ImprovementSuggestions from "./_components/ImprovementSuggestions";
 
 // OpenResume editor
-import { Provider } from "react-redux";
-import { store } from "@/openresume/lib/redux/store";
-import { ResumeForm } from "@/openresume/components/ResumeForm";
-import { Resume } from "@/openresume/components/Resume";
 
 export default function ResumePage() {
   const [mode, setMode] = useState("view"); // "view" | "edit"

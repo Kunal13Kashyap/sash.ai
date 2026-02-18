@@ -1,4 +1,4 @@
-# PrepAI
+# SASH AI
 
 SashAI is an AI-powered platform designed to help users prepare for job interviews through AI-driven mock interview simulations. The platform leverages machine learning to generate realistic interview questions and provides real-time feedback to improve interview skills. Users can track their progress and enhance their responses, making PrepAI a comprehensive tool for interview preparation.
 
